@@ -1,12 +1,10 @@
-package com.pluralsight;
-
 public class Transaction {
 
-    private String date;
-    private String time;
-    private String description;
-    private String vendor;
-    private double amount;
+    private final String date;
+    private final String time;
+    private final String description;
+    private final String vendor;
+    private final double amount;
 
     public Transaction(String date,
                        String time,
