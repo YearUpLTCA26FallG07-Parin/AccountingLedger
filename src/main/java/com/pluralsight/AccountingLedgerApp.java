@@ -124,20 +124,67 @@ public class AccountingLedgerApp {
 
                 case "L":
 
-                    System.out.println("Ledger");
+                    System.out.println("\nLedger");
+                    System.out.println("A) All");
+                    System.out.println("D) Deposits");
+                    System.out.println("P) Payments");
+                    System.out.println("H) Home");
 
-                    for (Transaction t : transactions) {
+                    System.out.print("Enter Choice: ");
+                    String ledgerChoice = keyboard.nextLine();
 
-                        System.out.println(
-                                t.getDate() + " | " +
-                                        t.getTime() + " | " +
-                                        t.getDescription() + " | " +
-                                        t.getVendor() + " | " +
-                                        t.getAmount()
-                        );
+                    switch(ledgerChoice.toUpperCase()){
+                        case "A":
+
+                            for (Transaction t : transactions) {
+                                System.out.println(
+                                        t.getDate() + " | " +
+                                                t.getTime() + " | " +
+                                                t.getDescription() + " | " +
+                                                t.getVendor() + " | " +
+                                                t.getAmount()
+                                );
+                            }
+                            break;
+
+                        case "D":
+
+                            for (Transaction t : transactions) {
+                                if (t.getAmount() > 0) {
+                                    System.out.println(
+                                            t.getDate() + " | " +
+                                                    t.getTime() + " | " +
+                                                    t.getDescription() + " | " +
+                                                    t.getVendor() + " | " +
+                                                    t.getAmount()
+                                    );
+                                }
+                            }
+                            break;
+
+                        case "P":
+
+                            for (Transaction t : transactions) {
+                                if (t.getAmount() < 0) {
+                                    System.out.println(
+                                            t.getDate() + " | " +
+                                                    t.getTime() + " | " +
+                                                    t.getDescription() + " | " +
+                                                    t.getVendor() + " | " +
+                                                    t.getAmount()
+                                    );
+                                }
+                            }
+                            break;
+
+                        case "H":
+                            break;
+
+                        default:
+                            System.out.println("Invalid Choice");
                     }
-
                     break;
+
 
                 case "X":
                     System.out.println("Goodbye");
