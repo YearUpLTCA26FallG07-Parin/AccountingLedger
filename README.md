@@ -4,14 +4,16 @@ About the app:
 
 My project is a Java command-line accounting ledger. From the Home Screen, you can record a deposit, make a payment, or open the ledger. The ledger shows transactions newest first, and the Reports menu lets you filter them by date, vendor, or a combination of fields. The app saves transactions as you add them and reloads them the next time you start it.
 
-My project uses two Java classes, AccountingLedgerApp and Transaction, along with a data file called transactions.csv. Transaction defines one ledger entry, and transactions.csv stores the entries between runs. I’ll show how those three files work together when I add a payment. I initially had trouble with the first transactions.csv file that I created, so I created a second one which works, but IntelliJ wont let me delete the original transactions.csv file, so I have two. It took me awhile to complete this project because I wrote a lot of my code on paper and in word first. I stayed organized by adding comments to my code and creating a word document of my process since I sometimes struggle to articulate my process. It’s also a form of notetaking that helps me learn and remember. 
+
+My project uses two Java classes, AccountingLedgerApp and Transaction, along with a data file called transactions.csv. Transaction defines one ledger entry, and transactions.csv stores the entries between runs. I’ll show how those three files work together when I add a payment. 
 Transaction.java
  
+
 Each Transaction object stores five pieces of information. It has a date, a time, a description, a vendor, and an amount. The constructor takes those five values and assigns them to the object. For example, in this.vendor = vendor, this.vendor is the field on the transaction, and vendor is the value I passed into the constructor.
 I made the fields private and final, so their values stay fixed after the object is created, and the rest of the app reads them through getter methods. For example, the ledger calls getAmount() to decide whether an entry belongs in the Deposits or Payments view.
 
 The constructor receives the five values. In this.vendor = vendor, the left side is the field on this object, and the right side is the value passed into the constructor.
-public double getAmount() {
+
 
 How a Payment Is Appended:
 
@@ -39,7 +41,9 @@ I also used try-with-resources for my file reader and writer so Java closes them
 How I Organized My Code:
 
 I organized AccountingLedgerApp.java around the menus. main loads the saved transactions and runs the Home Screen. showLedger handles the Ledger menu, and showReports handles the Reports menu. All three use readChoice, so users can type lowercase commands or leave extra spaces around them.
+
 I also use one addTransaction method for deposits and payments because both ask for the same information. I pass in isPayment to tell the method which option the user chose. If it’s a payment, the method makes the amount negative. Then it creates the transaction, saves it, and adds it to the list if the save succeeds.
+
 The file operations have their own methods. loadTransactions reads the saved rows and recreates the transaction objects at startup. saveTransaction adds a new row to the end of the file whenever I record a deposit or payment.
 Hypothetical questions (for class presentation):
 
