@@ -1,5 +1,7 @@
 package com.pluralsight;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -15,6 +17,9 @@ public class AccountingLedgerApp {
         String choice = "";
 
         ArrayList<Transaction> transactions = new ArrayList<>();
+
+        // Load existing transactions from CSV
+        loadTransactions(transactions);
 
         while (!choice.equalsIgnoreCase("X")) {
 
@@ -33,6 +38,7 @@ public class AccountingLedgerApp {
             switch (choice.toUpperCase()) {
 
                 case "D": {
+
                     System.out.println("Add Deposit");
 
                     //Ask for Description
@@ -73,6 +79,7 @@ public class AccountingLedgerApp {
                 }
 
                 case "P": {
+
                     System.out.println("Make Payment");
 
                     //Ask for Description
@@ -104,10 +111,11 @@ public class AccountingLedgerApp {
                             vendor,
                             amount
                     );
-                    //Confirmation
+
                     transactions.add(payment);
                     saveTransaction(payment);
 
+                    //Confirmation
                     System.out.println("Payment Added!");
                     System.out.println("Total Transactions: " + transactions.size());
 
@@ -115,9 +123,11 @@ public class AccountingLedgerApp {
                 }
 
                 case "L":
+
                     System.out.println("Ledger");
 
                     for (Transaction t : transactions) {
+
                         System.out.println(
                                 t.getDate() + " | " +
                                         t.getTime() + " | " +
@@ -126,6 +136,7 @@ public class AccountingLedgerApp {
                                         t.getAmount()
                         );
                     }
+
                     break;
 
                 case "X":
@@ -140,9 +151,51 @@ public class AccountingLedgerApp {
         keyboard.close();
     }
 
+    // Load Transactions Method
+    public static void loadTransactions(ArrayList<Transaction> transactions) {
+
+        try {
+
+            BufferedReader reader =
+                    new BufferedReader(new FileReader("transactions.csv"));
+
+            reader.readLine(); // Skip header row
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+
+                String[] parts = line.split("\\|");
+
+                String date = parts[0];
+                String time = parts[1];
+                String description = parts[2];
+                String vendor = parts[3];
+                double amount = Double.parseDouble(parts[4]);
+
+                Transaction transaction = new Transaction(
+                        date,
+                        time,
+                        description,
+                        vendor,
+                        amount
+                );
+
+                transactions.add(transaction);
+            }
+
+            reader.close();
+
+        } catch (IOException e) {
+            System.out.println("Could not load transactions.");
+        }
+    }
+
+    // Save Transaction Method
     public static void saveTransaction(Transaction transaction) {
 
         try {
+
             FileWriter writer = new FileWriter("transactions.csv", true);
 
             writer.write(
@@ -154,8 +207,8 @@ public class AccountingLedgerApp {
             );
 
             writer.close();
-        }
-        catch (IOException e) {
+
+        } catch (IOException e) {
             System.out.println("Error saving transaction.");
         }
     }
