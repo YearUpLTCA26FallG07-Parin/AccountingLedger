@@ -35,7 +35,7 @@ public class AccountingLedgerApp {
 
             switch (choice.toUpperCase()) {
 
-                case "D":
+                case "D": {
                     System.out.println("Add Deposit");
 
                     //Ask for Description
@@ -70,13 +70,38 @@ public class AccountingLedgerApp {
                     //Confirm
                     System.out.println("Transaction Added!");
                     System.out.println("Total Transactions: " + transactions.size());
-
                     break;
-
-                case "P":
+                }
+                case "P": {
                     System.out.println("Make Payment");
+                    //Ask for Description
+                    System.out.print("Description: ");
+                    String description = keyboard.nextLine();
+                    //Ask for Vendor
+                    System.out.print("Vendor: ");
+                    String vendor = keyboard.nextLine();
+                    //Ask Amount
+                    System.out.print("Amount: ");
+                    double amount = Double.parseDouble(keyboard.nextLine());
+                    //Make Amount Negative
+                    amount = -Math.abs(amount);
+                    //Get Date
+                    String date = LocalDate.now().toString();
+                    //Get Time
+                    String time = LocalTime.now().toString();
+                    //Create Transaction
+                    Transaction payment = new Transaction(
+                            date,
+                            time,
+                            description,
+                            vendor,
+                            amount
+                    );
+                    //Confirmation
+                    transactions.add(payment);
+                    System.out.println("Payment Added!");
                     break;
-
+                }
                 case "L":
                     System.out.println("Ledger");
 
@@ -88,6 +113,7 @@ public class AccountingLedgerApp {
                                         t.getVendor() + " | " +
                                         t.getAmount()
                         );
+
                     }
                     break;
 
