@@ -5,8 +5,7 @@ About the app:
 My project is a Java command-line accounting ledger. From the Home Screen, you can record a deposit, make a payment, or open the ledger. The ledger shows transactions newest first, and the Reports menu lets you filter them by date, vendor, or a combination of fields. The app saves transactions as you add them and reloads them the next time you start it.
 
 
-My project uses two Java classes, AccountingLedgerApp and Transaction, along with a data file called transactions.csv. Transaction defines one ledger entry, and transactions.csv stores the entries between runs. I’ll show how those three files work together when I add a payment. 
-Transaction.java
+My project uses two Java classes, AccountingLedgerApp and Transaction, along with a data file called transactions.csv. Transaction defines one ledger entry, and transactions.csv stores the entries between runs. The three files work together when a payment is added.
  
 
 Each Transaction object stores five pieces of information. It has a date, a time, a description, a vendor, and an amount. The constructor takes those five values and assigns them to the object. For example, in this.vendor = vendor, this.vendor is the field on the transaction, and vendor is the value I passed into the constructor.
